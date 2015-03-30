@@ -11,23 +11,8 @@ import (
 	"path/filepath"
 )
 
-var inDir string
-var outDir string
-var width int
-var height int
-
-func init() {
-	flag.IntVar(&width, "width", 2048, "width of the output image(s)")
-	flag.IntVar(&height, "height", 2048, "height of the output image(s)")
-
-	if len(os.Args) < 3 {
-		usage()
-	}
-}
-
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s [indir] [outdir]\n", os.Args[0])
-	flag.PrintDefaults()
+	fmt.Fprintf(os.Stderr, "usage: %s [-width <width>] [-height <height>] <indir> <outdir>\n", os.Args[0])
 	os.Exit(2)
 }
 
@@ -45,9 +30,18 @@ func writeSheet(outDir string, c int, im image.Image) error {
 }
 
 func main() {
+	var width, height int
+	flag.IntVar(&width, "width", 2048, "width of the output image(s)")
+	flag.IntVar(&height, "height", 2048, "height of the output image(s)")
+	flag.Parse()
 
-	inDir := os.Args[1]
-	outDir := os.Args[2]
+	args := flag.Args()
+	if len(args) < 2 {
+		usage()
+	}
+
+	inDir := args[0]
+	outDir := args[1]
 
 	files, err := filepath.Glob(path.Join(inDir, "*.*"))
 	if err != nil {
