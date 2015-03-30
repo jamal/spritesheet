@@ -12,7 +12,7 @@ This utility can be used to generate sprite sheet textures to be used in games. 
 
 # Installation
 
-This utility is written in [Go](http://www.golang.org/), so you need to have that installed first. Once go is install, simply run
+This utility is written in [Go](http://www.golang.org/), so you need to have that installed first. Once go is install, simply run:
     
     go get github.com/jamal/spritesheet
 
